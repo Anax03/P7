@@ -20,17 +20,24 @@
           <form>
             <div class="form-group">
               <label class="labelText" for="formImage"
-                >Télécharger une image</label
+                >Télécharger une image : </label
               >
-              <input
-                type="file"
-                class="form-control-file"
-                id="formImage"
+              
+              <b-form-file
+     
+      
+      placeholder="Choisi une image..."
+      drop-placeholder="Choisi une image..."
+      id="formImage"
                 @change="onFileChange"
                 accept="image/*"
-              />
+    ></b-form-file>
+
+              
             </div>
           </form>
+
+         
 
           <div class="form-group">
             <button
@@ -58,7 +65,8 @@ export default {
       postTexte: null,
       postImage: null,
       imageData: "",
-      errorMessage: ""
+      errorMessage: "",
+      
     };
   },
 
@@ -68,10 +76,15 @@ export default {
   methods: {
     /// Function pour ajouter un poste
     createPOST() {
+       
+       
       /// enregistré input du l'utlisateur  (Image TEXTE)
       const formData = new FormData();
+      
+      
       formData.append("texte", this.postTexte);
       formData.append("image", this.postImage);
+     
 
       // Si l'utilisateur à rien publier
       if (formData.get("texte") == "null" && formData.get("image") == "null") {
@@ -87,18 +100,20 @@ export default {
           .then(res => {
             // Recharger la page pour voir
             if (res) {
+             
+             
               window.location.reload();
             }
           }) // Si ya err
           .catch(err => {
             alert(err.response.data.error.code);
-            console.log(err.response.data.error.code);
+            
           });
       }
     },
     onFileChange(e) {
       this.postImage = e.target.files[0] || e.dataTransfer.files;
-      console.log(this.postImage);
+      
 
       const input = event.target;
       if (input.files && input.files[0]) {

@@ -106,7 +106,7 @@ export default {
           this.email = res.body.email;
           this.username = res.body.username;
         })
-        .catch((err) => console.log(err));
+        
     },
 
     ///changer Mot de passe
@@ -135,7 +135,7 @@ export default {
             }
           )
           .then((response) => {
-            console.log('Password changed', response);
+           
 
             this.results = response.data.message;
             setTimeout(() => {
@@ -168,13 +168,12 @@ export default {
               Authorization: 'Bearer ' + localStorage.getItem('token'),
             },
           })
-          .then((res) => {
-            console.log(res);
+          .then(() => {
             localStorage.clear();
             this.user.token = null;
             this.$router.push({ path: '/' });
           })
-          .catch((error) => console.log(error));
+          .catch((error) => alert(error));
       }
     },
   }, // modifications aprés la requête

@@ -46,7 +46,7 @@
 
                 <img
                   class="img-thumbnail"
-                  :src="post.attachement"
+                  :src="`${URLbackend}:${portBackend}`.concat(post.attachement)"
                   id="ImagemodalPost"
                 />
                 <button
@@ -90,6 +90,8 @@ export default {
   data() {
     return {
       deleteImg: false,
+      URLbackend:process.env.VUE_APP_URLBACKEND,
+      portBackend:process.env.VUE_APP_portBackend
     };
   },
   computed: {
@@ -125,12 +127,12 @@ export default {
               },
             }
           ) // Si requête marche bien
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+           
             window.location.reload();
           }) // Si ya une erreur
-          .catch((err) => {
-            console.log('error 1' + err);
+          .catch(() => {
+           
           });
       } else if (newContent) {
         // Requête avec juste modification du texte
@@ -151,18 +153,18 @@ export default {
             }
           )
           // response GOOD
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+            
 
             window.location.reload();
           })
           //une erreur
-          .catch((err) => {
-            console.log('error 2' + err);
+          .catch(() => {
+            
           });
       } else {
         alert('Aucun changement');
-        console.log('aucun changement');
+       
       }
     },
 
@@ -172,9 +174,9 @@ export default {
         document.querySelector('#ImagemodalPost').src = '#';
         document.querySelector('#btnRemoveImage').style.display = 'none';
         document.querySelector('.imagePost').style.display = 'none';
-        console.log(document.querySelector('#ImagemodalPost').src);
+       
         this.deleteImg = true;
-        console.log(this.deleteImg);
+      
       }
     },
   },

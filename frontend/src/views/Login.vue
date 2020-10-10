@@ -71,7 +71,6 @@ export default {
           .then((res) => {
             localStorage.setItem('token', res.data.token);
 
-            console.log(localStorage.getItem('token'));
             this.user.token = res.data.token;
 
             this.$router.push({ path: '/wall' });

@@ -27,6 +27,18 @@
           <div class="line"></div>
         </div>
       </label>
+       <label>
+        <p class="label-txt">Confirmation mot de passe</p>
+        <input
+          type="password"
+          class="input"
+          v-model="confirmPassword"
+          maxlength="100"
+        />
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+      </label>
       <button type="submit" @click.prevent="signUpUser">Inscription</button>
     </form>
   </div>
@@ -43,6 +55,7 @@ export default {
       email: null,
       username: null,
       password: null,
+      confirmPassword:null
     };
   },
 
@@ -52,14 +65,12 @@ export default {
   methods: {
     ////Signup
     signUpUser() {
-      console.log(this.email);
-      console.log(this.username);
-      console.log(this.password);
+      
       // Input validation
       ///Valid email
       const regexEmail = /^[a-z0-9._-]+@[a-z0-9.-]{2,}[.][a-z]{2,3}$/;
-      const EmailInscription = this.email.toLowerCase();
-      console.log(typeof EmailInscription);
+      const EmailInscription = this.email==null?null:this.email.toLowerCase();
+      
 
       /// second const regexEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
       /*Valid username :(Total +5 characters ) The first character of the 
@@ -72,18 +83,19 @@ export default {
        */
       const regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
-      console.log(regexEmail.test(this.email));
-      console.log(regexusername.test(this.username));
-      console.log(regexPassword.test(this.password));
 
       if (
         (this.email !== null ||
           this.username !== null ||
-          this.password !== null) &&
+          this.password !== null
+          || this.confirmPassword !==null
+          ) &&(
         regexEmail.test(EmailInscription) &&
         regexusername.test(this.username) &&
-        regexPassword.test(this.password)
-      ) {
+        regexPassword.test(this.password) &&
+        regexPassword.test(this.confirmPassword)
+        &&  regexEmail.test(EmailInscription)
+      ) &&(this.confirmPassword===this.password)) {
         axios
           .post('http://localhost:3000/api/user/signup', {
             email: this.email,
@@ -91,8 +103,8 @@ export default {
             password: this.password,
           })
 
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+            
             this.$router.push({ path: '/login' });
             //Réinitialisation
             this.email = null;
@@ -101,15 +113,17 @@ export default {
           })
           .catch((error) => {
             alert(error.response.data.error);
-            console.log('ERROR : ' + error.response.data.error);
+           
           });
       } else {
         alert(
           'Error vous devez remplir les champs correctement : \n' +
             'Valid email: Valid adresse email\n' +
             'Valid username : +5 characters (1ére char alphabetic :) avec minumum 1 numéro\n' +
-            'Valid Password : +8 characters avec minumum 1 numéro,1 lettre majuscule 1 lettre minuscule'
+            'Valid Password : +8 characters avec minumum 1 numéro,1 lettre majuscule 1 lettre minuscule\n'+
+            'les mots de passe saisis doivent etre identiques'
         );
+        
       }
     },
   },

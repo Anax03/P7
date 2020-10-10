@@ -50,7 +50,7 @@
             </p>
           </section>
           <figure class="figure  text-center " v-if="post.attachement">
-            <img :src="post.attachement" alt="Post Image" class="img-fluid" />
+            <img :src="`${URLbackend}:${portBackend}`.concat(post.attachement)" alt="Post Image" class="img-fluid" />
           </figure>
         </div>
       </div>
@@ -67,7 +67,9 @@ export default {
   name: "Posts",
   data() {
     return {
-      deleteImg: false
+      deleteImg: false,
+      URLbackend:process.env.VUE_APP_URLBACKEND,
+      portBackend:process.env.VUE_APP_portBackend
     };
   },
   props: {
@@ -82,14 +84,13 @@ export default {
 
   methods: {
     removePost() {
-      console.log(this.post.id);
-      console.log(this.user.userId);
+     
+    
       const postId = this.post.id.toString();
       const postUserId = this.user.userId.toString();
       const parameter = postId.concat(":", postUserId);
-      const splitstring = parameter.split(":");
-      console.log(splitstring);
-      console.log(Number(splitstring[0]));
+     
+      
 
       const result = confirm("Want to delete?");
       if (result) {
@@ -102,7 +103,7 @@ export default {
           .then(() => {
             window.location.reload();
           })
-          .catch(error => console.log(error));
+        
       }
     },
     emitInfoPost() {

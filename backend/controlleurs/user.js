@@ -151,15 +151,15 @@ exports.profile = (req, res) => {
     async (errors, results) => {
       ///Error db
       if (errors) {
-        console.log(errors);
+        
         res.status(500).json({ errors });
       } else if (results == 0) {
         /// Si l'id n'existe pas dans db
-        console.log(errors);
+        
         res.status(500).json({ errors });
       } else {
         /// Récuperer le body d'utilisateur
-        console.log(results[0]);
+       
         res.status(200).json(results[0]);
       }
     }
@@ -173,7 +173,7 @@ exports.updatePassword = [
   async (req, res) => {
     ///////
     const id = getUserId(req.headers.authorization);
-    console.log('id ' + id);
+   
     const newPassword = req.body.newPassword;
 
     //vérifier si le nouveau mdp valide
@@ -223,16 +223,16 @@ exports.delete = (req, res) => {
       [id],
       (errors, rows) => {
         if (errors) {
-          console.log(errors);
+         
         } else {
           rows.forEach(function (row) {
             if (row.attachement) {
               const filename = row.attachement.split('/images/')[1];
               fs.unlink(`images/${filename}`, (err) => {
                 if (err) {
-                  console.log('failed to delete  image:' + err);
+                 
                 } else {
-                  console.log('successfully deleted  image');
+                  
                 }
               });
             }
@@ -247,16 +247,16 @@ exports.delete = (req, res) => {
 
     db.query('DELETE FROM posts WHERE userId =?', [id], (errors, results) => {
       if (errors) {
-        console.log(errors);
+        
       } else {
-        console.log('Posts supprimer');
+        
         db.query('DELETE FROM users WHERE id =?', [id], (errors, results) => {
-          console.log('res ' + results);
+          
           if (errors) {
-            console.log(errors);
+           
             res.status(500).json({ error });
           } else {
-            console.log('Compte supprimer');
+           
             res.status(200).json({ message: 'compte supprimer' });
           }
         });

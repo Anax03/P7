@@ -8,9 +8,15 @@ import Accueil from '../views/Accueil';
 import Wall from '../views/Wall';
 import User from '../views/User';
 
+
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: '*',
+    component: () => import("../views/notfound.vue")
+},
+  
   {
     path: '/signup',
     name: 'Signup',
@@ -64,8 +70,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
-/// Title
 
 //Controller les pages affichier par les utilisateurs
 router.beforeEach((to, from, next) => {

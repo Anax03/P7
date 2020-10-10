@@ -5,9 +5,12 @@ const moment = require('moment-timezone');
 
 //// Create POST ...
 exports.createPost = (req, res) => {
-  console.log(moment().tz('Europe/Paris').format('MMMM Do YYYY, h:mm:ss a'));
+  
   let imageUrl = null;
+  let imageSource=null;
   const id = getUserId(req.headers.authorization);
+  const sanitizedString = req.sanitize(req.body.texte);
+  
 
   db.query(
     'SELECT * FROM users WHERE id = ?',
@@ -22,15 +25,19 @@ exports.createPost = (req, res) => {
       } else {
         /// Si l'utilisateur existe
         const user = results[0];
-        const content = req.body.texte;
+        const content = sanitizedString;
 
         // image
         if (req.file != undefined) {
           imageUrl = `${req.protocol}://${req.get('host')}/images/${
             req.file.filename
           }`;
+          
+          
+          imageSource=imageUrl.replace(`${req.protocol}://${req.get('host')}`,'');
         } else {
           imageUrl = null;
+          imageSource=null;
         }
 
         if (content === null && imageUrl === null) {
@@ -42,7 +49,7 @@ exports.createPost = (req, res) => {
             {
               userId: id,
               content: content,
-              attachement: imageUrl,
+              attachement: imageSource,
               username: user.username,
               createdAt: moment()
                 .add(120, 'm')
@@ -84,6 +91,8 @@ exports.getPosts = (req, res) => {
 exports.updatePost = (req, res) => {
   /// récuperer id du utilisateur
   const id = getUserId(req.headers.authorization);
+  const content = req.sanitize(req.body.texte);
+
 
   const postId = req.body.idPost;
   const postUserId = req.body.postUserId;
@@ -102,15 +111,15 @@ exports.updatePost = (req, res) => {
       (errors, results) => {
         if (errors) {
         } else {
-          console.log('attachement ' + results[0].attachement);
+          
           //  Si il ya une image on le supprime
           if (results[0].attachement) {
             const filename = results[0].attachement.split('/images/')[1];
             fs.unlink(`images/${filename}`, (err) => {
               if (err) {
-                console.log('failed to delete  image:' + err);
+                
               } else {
-                console.log('successfully deleted  image');
+               
               }
             });
           }
@@ -127,16 +136,16 @@ exports.updatePost = (req, res) => {
     else {
       const userSelected = results[0];
 
-      if (req.body.texte == null && req.body.imageUrl == null) {
+      if (content == null && req.body.imageUrl == null) {
         res.status(404).json({ message: 'No content' });
       } else if (userSelected.isAdmin === 1 || postUserId === id) {
         db.query(
           'UPDATE posts SET content =?,attachement = ? ,createdAt = ? WHERE id=?',
-          [req.body.texte, req.body.imageUrl, dateNow, postId],
+          [content, req.body.imageUrl==null?null:req.body.imageUrl.replace(`${req.protocol}://${req.get('host')}`,''), dateNow, postId],
           (errors, results) => {
             if (errors) {
               res.status(401).json(errors);
-              console.log(errors);
+              
             } else {
               res.status(200).json({ message: 'Post modifié' });
             }
@@ -175,15 +184,15 @@ exports.deletePost = (req, res) => {
           (errors, results) => {
             if (errors) {
             } else {
-              console.log('attachement ' + results[0].attachement);
+              
               //  Si il ya une image on le supprime
               if (results[0].attachement) {
                 const filename = results[0].attachement.split('/images/')[1];
                 fs.unlink(`images/${filename}`, (err) => {
                   if (err) {
-                    console.log('failed to delete  image:' + err);
+                   
                   } else {
-                    console.log('successfully deleted  image');
+                   
                   }
                 });
               }
@@ -195,7 +204,7 @@ exports.deletePost = (req, res) => {
           'DELETE FROM posts WHERE id=?',
           [postID],
           (errors, results) => {
-            console.log('acfeectd ' + results);
+            
             if (errors) {
               res.status(401).json(errors);
             } else {

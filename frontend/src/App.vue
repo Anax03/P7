@@ -20,8 +20,8 @@ export default {
   },
   watch: {
     $route: {
-      handler: (to, from) => {
-        console.log(from);
+      handler: (to) => {
+        
         document.title = to.meta.title;
       },
       immediate: true

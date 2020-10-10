@@ -29,12 +29,7 @@ export default new Vuex.Store({
       state.editOption = value;
     },
   },
-  getters: {
-    // ...
-    getToken: (state, getters) => {
-      return getters.doneTodos.length;
-    },
-  },
+  getters: {},
   actions: {
     getUser(context) {
       axios

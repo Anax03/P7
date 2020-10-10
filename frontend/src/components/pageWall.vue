@@ -47,12 +47,12 @@ export default {
       })
 
       .then((response) => {
-        console.log('posts : ', response.data);
+      
         this.dataPosts = response.data;
-        console.log(this.dataPosts);
+        
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+       
       }),
       this.$store.dispatch('getUser');
   },

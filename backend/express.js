@@ -6,11 +6,14 @@ const Cookiesession = require('cookie-session');
 const userRoute = require('./routes/user');
 const postRoute = require('./routes/post');
 const app = express();
+const expressSanitizer = require('express-sanitizer');
+
 
 //body-parser
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSanitizer());
 
 //cookies
 
