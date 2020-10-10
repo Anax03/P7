@@ -28,8 +28,10 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### ENV Variables créer un fichier .env en dossier frontend
+### ENV Variables ( .env en dossier frontend )
 
 avec deux Variables :
+
 VUE_APP_portBackend= (Port backend ex:3000)
+
 VUE_APP_URLBACKEND=http://localhost
