@@ -52,10 +52,13 @@ exports.createPost = (req, res) => {
               attachement: imageSource,
               username: user.username,
               createdAt: moment()
-                .add(120, 'm')
-                .tz('Europe/Paris')
-                .format('YYYY-MM-DD HH:mm:ss'),
-              updatedAt: '00-00-00',
+              .add(120, 'm')
+              .tz('Europe/Paris')
+              .format('YYYY-MM-DD HH:mm:ss'),
+              updatedAt: moment()
+              .add(120, 'm')
+              .tz('Europe/Paris')
+              .format('YYYY-MM-DD HH:mm:ss'),
             },
             (error, results) => {
               if (error) {

@@ -2,6 +2,7 @@ const crypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const { body, validationResult } = require('express-validator');
+const moment = require('moment-timezone');
 require('dotenv').config();
 
 //database
@@ -45,11 +46,14 @@ exports.signup = [
                 username: req.body.username,
                 password: hashedPassword,
                 isAdmin: 0,
-                createdAt: new Date()
-                  .toISOString()
-                  .slice(0, 19)
-                  .replace('T', ' '),
-                updatedAt: '00-00-00',
+                createdAt: moment()
+                .add(120, 'm')
+                .tz('Europe/Paris')
+                .format('YYYY-MM-DD HH:mm:ss'),
+                updatedAt: moment()
+                .add(120, 'm')
+                .tz('Europe/Paris')
+                .format('YYYY-MM-DD HH:mm:ss'),
               },
               (error, results) => {
                 if (error) {
