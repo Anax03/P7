@@ -198,7 +198,7 @@ exports.updatePassword = [
               'UPDATE users SET password = ? WHERE id = ?',
               [hashedPassword, id],
               (errors, results) => {
-                if (results == 0) {
+                if (errors) {
                   res.status(500).json({ error });
                 } else {
                   res.status(201).json({ message: 'mot de passe modifié' });
