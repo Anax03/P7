@@ -12,7 +12,7 @@ Pour la création d'une database avec les tables nécessaire + compte admin
 
 Pour changer les droits d'administrations de l'utilisateur \
 avec votre nom utilisateur mysql + mot de passe \
-USE `databaseGroupomania`
+USE `databaseGroupomania` \
 UPDATE users SET isAdmin =1 WHERE email='(Email d'utilisateur)' \
 
 pour lancer le serveur : \
