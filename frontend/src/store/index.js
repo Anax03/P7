@@ -11,7 +11,7 @@ export default new Vuex.Store({
       username: 'Nc',
       userId: 'Nc',
       email: 'Nc',
-      token: localStorage.getItem('token'),
+      token: null,
       isAdmin: false,
     },
     editOption: '',
