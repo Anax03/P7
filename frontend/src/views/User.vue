@@ -16,7 +16,7 @@
           />
         </div>
         <!-- Username -->
-        <label for="username">Username</label>
+        <label for="username">Nom utilisateur</label>
         <div class="form-group">
           <input
             readonly
@@ -27,7 +27,7 @@
           />
         </div>
         <!-- Password -->
-        <div class="changement" v-if="user.isAdmin === 0">
+        <div class="changement" >
           <label>Nouveau mot de passe</label>
           <div class="form-group">
             <input

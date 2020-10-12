@@ -31,5 +31,5 @@ CREATE TABLE IF NOT EXISTS `posts` (
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO users (email,username,password,isAdmin,createdAt,updatedAt) values ('admin@utilisateur.com','admin','Admin***000',1,'0000-00-00','0000-00-00');
+
 

@@ -23,6 +23,13 @@
 
     <div id="navbarSupportedContent" class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item active" v-if="user.token !== null">
+          
+            <a class="nav-link"
+              >{{user.username}}</a
+            >
+          
+        </li>
         <li class="nav-item active" v-if="user.token === null">
           <router-link to="/">
             <a class="nav-link"

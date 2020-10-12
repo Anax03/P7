@@ -76,19 +76,7 @@ exports.login = [
   body('email').isEmail(),
   body('password').isLength({ min: 8 }),
   async (req, res, next) => {
-    if (
-      req.body.email == process.env.adminWeb &&
-      req.body.password == process.env.passwordWeb
-    ) {
-      const token = jwt.sign({ id: 54, isAdmin: true }, 'RANDOM_TOKEN_SECRET', {
-        expiresIn: '24h',
-      });
-      res.status(200).json({
-        userId: 54,
-        token: token,
-        isAdmin: true,
-      });
-    } else {
+     
       const email = req.body.email;
       const password = req.body.password;
       /// Vérifier si l'utilisateur à remplis les champs email,password
@@ -140,7 +128,7 @@ exports.login = [
           }
         );
       }
-    }
+    
   },
 ];
 
