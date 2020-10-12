@@ -157,14 +157,11 @@ exports.profile = (req, res) => {
       if (errors) {
         
         res.status(500).json({ errors });
-      } else if (results == 0) {
-        /// Si l'id n'existe pas dans db
-        
-        res.status(500).json({ errors });
-      } else {
+      }  else {
         /// Récuperer le body d'utilisateur
        
         res.status(200).json(results[0]);
+        
       }
     }
   );
