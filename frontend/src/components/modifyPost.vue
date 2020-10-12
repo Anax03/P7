@@ -72,7 +72,7 @@
             data-dismiss="modal"
             @click="updatePostUser"
           >
-            Modify post
+            Modifier post
           </button>
         </div>
       </div>
