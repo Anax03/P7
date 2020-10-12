@@ -62,7 +62,13 @@ export default {
   methods: {
     /// Requete login
     submitLogin() {
-      if (this.email !== null || this.password !== null) {
+
+      const regexEmail = /^[a-z0-9._-]+@[a-z0-9.-]{2,}[.][a-z]{2,3}$/;
+      const EmailInscription = this.email==null?null:this.email.toLowerCase();
+      const regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
+
+      if ((this.email != null && this.password != null) && (regexEmail.test(EmailInscription) &&regexPassword.test(this.password))) {
         axios
           .post('http://localhost:3000/api/user/login', {
             email: this.email,
@@ -79,7 +85,7 @@ export default {
             alert(err.response.data.error);
           });
       } else {
-        alert('Vous devez remplir les champs');
+        alert('Vous devez remplir les champs correctement');
       }
     },
   },
