@@ -19,10 +19,7 @@ exports.createPost = (req, res) => {
       ///Error db
       if (errors) {
         res.status(500).json({ errors });
-      } else if (results == 0) {
-        /// Si l'id n'existe pas dans db
-        res.status(500).json({ errors });
-      } else {
+      }  else {
         /// Si l'utilisateur existe
         const user = results[0];
         const content = sanitizedString;
